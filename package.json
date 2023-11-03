@@ -1,0 +1,15 @@
+{
+    "name": "ctk-test-case",
+    "version": "0.0.1",
+    "description": "Stanislaw Pachnik's ctk recruitment test case",
+    "main": "app.js",
+    "scripts": {
+        "dev": "concurrently \"cd server && npm run dev\" \"cd client && npm run dev\"",
+        "install": "cd server && npm install && cd ../client && npm install"
+    },
+    "author": "SP",
+    "license": "ISC",
+    "devDependencies": {
+        "concurrently": "^8.2.2"
+    }
+}

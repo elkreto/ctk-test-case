@@ -1,5 +1,5 @@
 {
-  "name": "ctk-test-case",
+  "name": "ctk-test-case-api",
   "version": "0.0.1",
   "description": "Stanislaw Pachnik's ctk recruitment test case",
   "main": "app.js",
