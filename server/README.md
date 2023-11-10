@@ -1,2 +1,0 @@
-# ctk-test-case
- 

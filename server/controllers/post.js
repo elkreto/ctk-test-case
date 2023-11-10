@@ -48,7 +48,8 @@ exports.getAllPosts = (req, res, next) => {
     Post.findAll({
         offset: page * pageSize,
         limit: pageSize,
-        include: Comment
+        include: Comment,
+        order: [['createdAt', 'DESC']]
     })
     .then((posts) => res.json(posts))
     .catch((err) => next(err))
@@ -138,6 +139,7 @@ exports.getPost = async (req, res, next) => {
  *                          id: 52e15172-17f7-47b0-b4c0-bdff49ce224d
  *                          title: Holiday Break
  *                          text: No lessons during 22.12.2023 - 2.1.2024
+ *                          comments: []
  *                          updatedAt: 2023-10-04T18:55:43+0000
  *                          createdAt: 2023-10-04T18:55:43+0000
  *           400:
@@ -155,7 +157,10 @@ exports.addPost = (req, res, next) => {
         title: title,
         text: text
     })
-    .then((post) => res.json(post))
+    .then((post) => res.json({
+        ...post.get({plain: true}), 
+        comments: []
+    }))
     .catch((err) => next(err))
 }
 
@@ -195,6 +200,7 @@ exports.addPost = (req, res, next) => {
  *                          id: 52e15172-17f7-47b0-b4c0-bdff49ce224d
  *                          title: NewName
  *                          text: NewContent 
+ *                          comments: []
  *                          updatedAt: 2023-10-04T18:55:43+0000
  *                          createdAt: 2023-10-04T18:55:43+0000
  *           400:
@@ -209,7 +215,7 @@ exports.editPost = async (req, res, next) => {
 
     if(!id) return res.status(400).send('No id given!')
 
-    const post = await Post.findOne({where: {id: id}})
+    const post = await Post.findOne({where: {id: id}, include: Comment})
 
     if(!post) return res.status(404).send('No post found with given id!')
 

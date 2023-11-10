@@ -126,7 +126,7 @@ exports.editComment = async (req, res, next) => {
 
     comment.save()
     .then((updatedComment) => res.json(updatedComment))
-    .err((err) => next(err))
+    .catch((err) => next(err))
 }
 
 /**
@@ -155,12 +155,12 @@ exports.editComment = async (req, res, next) => {
  *           404:
  *              description: No comment found with given id
  */
-exports.deleteComment = (req, res, next) => {
+exports.deleteComment = async (req, res, next) => {
     const {id} = req.body
 
     if(!id) return res.status(400).send('No id given!')
 
-    const comment = Comment.findOne({where: {id: id}})
+    const comment = await Comment.findOne({where: {id: id}})
 
     if(!comment) return res.status(404).send('No comment with given id was found!')
 
