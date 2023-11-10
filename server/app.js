@@ -2,10 +2,14 @@ const express = require('express')
 const sequelize = require('./cfg/sequelize')
 const fs = require('fs')
 const bodyParser = require('body-parser')
+const cors = require('cors')
 const env = require('dotenv').config()
 const models = require('./models')
 
 const app = express()
+
+//cors
+app.use(cors())
 
 //parser setup
 app.use(bodyParser.urlencoded({ extended: true }))
